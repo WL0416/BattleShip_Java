@@ -52,5 +52,7 @@ public interface Player {
      * @return True if there are no ship remaining, i.e., all ships sunk.
      */
     boolean noRemainingShips();
+    
+    int getMode(); 
 
 } // end of interface Player

@@ -11,7 +11,7 @@ public class Answer {
     /** If isHit is True (hit ship) and this hit destroyed a shit, this
         shipSunk attribute should be set to the object of ship destroyed. */
     Ship shipSunk = null;
-
+    
     /**
      * Prints out answer information.
      */

@@ -15,6 +15,7 @@ import ship.*;
  * The visualisation code uses an object of this class to draw correctly.
  */
 public class World {
+	
     // nested class for keeping the coordinates of ships or shots.
     public class Coordinate {
         public int row;
@@ -237,13 +238,13 @@ public class World {
     public void drawShot(Guess guess) {
         if(!isVisual) return;
         int offset = player - 1;
-
         int d = offset * (numColumn + 1);
-            StdDraw.setPenColor(StdDraw.RED);
-            StdDraw.setPenRadius(0.01);
+        
+        StdDraw.setPenColor(StdDraw.RED);
+        StdDraw.setPenRadius(0.01);
         if (isHex) {
             int r = guess.row;
-            double c = guess.column - (r + 1) / 2 + r % 2 * 0.5;;
+            double c = guess.column - (r + 1) / 2 + r % 2 * 0.5;
             StdDraw.line(d+c+0.8, r+0.2, d+c+0.2, r+0.8);
             StdDraw.line(d+c+0.8, r+0.8, d+c+0.2, r+0.2);
         } else {
@@ -252,77 +253,46 @@ public class World {
             StdDraw.line(d+c+0.8, r+0.2, d+c+0.2, r+0.8);
             StdDraw.line(d+c+0.8, r+0.8, d+c+0.2, r+0.2);
         }
-
+        
         // Make it slower
         try {
-            TimeUnit.MILLISECONDS.sleep(300);
+            TimeUnit.MILLISECONDS.sleep(50);
         } catch (InterruptedException ex) {
             // do nothing
         }
     } // end of drawShot()
     
-    public void drawSputtering(Guess guess)
+    /**
+     * Draw an orange circle for each shot
+     * 
+     * @param guess
+     */
+    public void drawTarget(Guess guess)
     {
-    	StdDraw.setPenColor(StdDraw.BOOK_ORANGE);
-        StdDraw.setPenRadius(0.01);
-    	if(guess.column==0 && guess.row == 0)
-    	{
-    		StdDraw.circle(guess.column+1.5, guess.row+0.5, 0.4);
-    		StdDraw.circle(guess.column+0.5, guess.row+1.5, 0.4);
-    	}
-    	// bottom left
-    	else if(guess.column== 0 && guess.row == numRow-1)
-    	{
-    		StdDraw.circle(guess.column+1.5, guess.row+0.5, 0.4);
-    		StdDraw.circle(guess.column+0.5, guess.row-1.5, 0.4);
-    	}
-    	/*
-    	else if(guess.column == numColumn-1 && guess.row == 0)
-    	{
-    		StdDraw.circle(guess.column-1.5, guess.row+0.5, 0.4);
-    		StdDraw.circle(guess.column+0.5, guess.row+1.5, 0.4);
-    	}*/
-    	// top right
-    	else if(guess.column == numColumn-1 && guess.row == numRow-1)
-    	{
-    		StdDraw.circle(guess.column-0.5, guess.row+0.5, 0.4);
-    		StdDraw.circle(guess.column+0.5, guess.row-0.5, 0.4);
-    	}
-    	else if(guess.row==0)
-    	{
-    		StdDraw.circle(guess.column+0.5, guess.row+1.5, 0.4);
-    		StdDraw.circle(guess.column-0.5, guess.row+0.5, 0.4);
-    		StdDraw.circle(guess.column+1.5, guess.row+0.5, 0.4);
-    	}
-    	else if(guess.row==numRow-1)
-    	{
-    		StdDraw.circle(guess.column-0.5, guess.row+0.5, 0.4);
-    		StdDraw.circle(guess.column+1.5, guess.row+0.5, 0.4);
-    		StdDraw.circle(guess.column+0.5, guess.row-0.5, 0.4);
-    	}
-    	else if(guess.column==0)
-    	{
-    		StdDraw.circle(guess.column+0.5, guess.row+1.5, 0.4);    		
-    		StdDraw.circle(guess.column+1.5, guess.row+0.5, 0.4);    		
-    		StdDraw.circle(guess.column+0.5, guess.row-0.5, 0.4);
-    	}
-    	else if(guess.column==numColumn-1)
-    	{
-    		StdDraw.circle(guess.column-0.5, guess.row+0.5, 0.4);
-    		StdDraw.circle(guess.column+0.5, guess.row+1.5, 0.4);
-    		StdDraw.circle(guess.column+0.5, guess.row-0.5, 0.4);
-    	}
-    	else
-    	{
-    		// left
-    		StdDraw.circle(guess.column-0.5, guess.row+0.5, 0.4);
-    		// down
-    		StdDraw.circle(guess.column+0.5, guess.row+1.5, 0.4);
-    		// right
-    		StdDraw.circle(guess.column+1.5, guess.row+0.5, 0.4);
-    		//up
-    		StdDraw.circle(guess.column+0.5, guess.row-0.5, 0.4);
-    	}
+    	 if(!isVisual) return;
+         int offset = player - 1;
+         int d = offset * (numColumn + 1);
+         StdDraw.setPenColor(StdDraw.BOOK_ORANGE);
+         StdDraw.setPenRadius(0.01);
+         
+         if (isHex) {
+             int r = guess.row;
+             double c = guess.column - (r + 1) / 2 + r % 2 * 0.5;
+             StdDraw.circle(d+c+0.5, r+0.5, 0.4);
+         }
+         else
+         {
+        	 int r = guess.row;
+             int c = guess.column;
+             StdDraw.circle(d+c+0.5, r+0.5, 0.4);
+         }
+               
+         // Make it slower
+         try {
+             TimeUnit.MILLISECONDS.sleep(50);
+         } catch (InterruptedException ex) {
+             // do nothing
+         }      
     }
-
+    
 } // end of class World

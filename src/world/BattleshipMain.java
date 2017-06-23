@@ -2,6 +2,7 @@ package world;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+
 import player.*;
 
 /**
@@ -120,11 +121,11 @@ public class BattleshipMain {
                 boolean p2HasNoShipsLeft = false;
                 int p1Rounds = 0;
                 int p2Rounds = 0;
-
+                
                 while (!p1HasNoShipsLeft || !p2HasNoShipsLeft) {
                     Round++;
                     if (logWriter != null) logWriter.println("Round " + Round);
-
+                    
                     // Player 1's turn
                     // Keep playing as long as player 2 still have ships
                     if (!p2HasNoShipsLeft) {
@@ -135,23 +136,30 @@ public class BattleshipMain {
                         }
 
                         // Check whether the guess is valid.
-                        if (!world2.updateShot(guess)) {
-                            System.err.println("Invalid guess or repeated guess.");
+                        if (!world2.updateShot(guess)) {                
+                            System.err.println("Invalid guess or repeated guess.");             
                             if (logWriter != null) {
                                 logWriter.println("Invalid guess or repeated guess.");
                             }
                         } else {
-                            world2.drawShot(guess);
-                        }
+                        	if(p1.getMode()==0)
+                        		world2.drawShot(guess);
+                        	else
+                        		world2.drawTarget(guess);
+                        }                                             
+                        
                         // player 2 answers player 1
-                        Answer answer = p2.getAnswer(guess);
+                        Answer answer = p2.getAnswer(guess);                        
+                        
                         // player 1 updates their own state
                         p1.update(guess, answer);
+                        
                         if (logWriter != null) {
                             logWriter.println("Player 2 " + answer);
                         }
                         // check if player 2 has ships left
                         if (p2.noRemainingShips()) {
+                        	System.out.println("Player 1 is over");
                             p1Rounds = Round;
                             p2HasNoShipsLeft = true;
                         }
@@ -173,18 +181,24 @@ public class BattleshipMain {
                                 logWriter.println("Invalid guess or repeated guess.");
                             }
                         } else {
-                            world1.drawShot(guess);
-                            world1.drawSputtering(guess);
+                        	if(p2.getMode()==0)
+                        		world1.drawShot(guess);
+                        	else
+                        		world1.drawTarget(guess);
                         }
+                        
                         // player 1 answers player 2
-                        Answer answer = p1.getAnswer(guess);
+                        Answer answer = p1.getAnswer(guess);                        
+         
                         // player 2 updates their own state
                         p2.update(guess, answer);
+                        
                         if (logWriter != null) {
                             logWriter.println("Player 1 " + answer);
                         }
                         // check if player 1 has ships left
                         if (p1.noRemainingShips()) {
+                        	System.out.println("Player 2 is over");
                             p2Rounds = Round;
                             p1HasNoShipsLeft = true;
                         }
